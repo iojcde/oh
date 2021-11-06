@@ -14,6 +14,7 @@ interface DVDLogoState {
 interface DVDLogoProps {
     width: number;
     height: number;
+    speed: number;
 }
 
 const MS_PER_FRAME = 5;
@@ -24,11 +25,12 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
 
     constructor(props: DVDLogoProps) {
         super(props);
+
         this.state = {
             x: DVDLogo.getRandomNumber(0, this.props.width - widthDVDLogo),
             y: DVDLogo.getRandomNumber(0, this.props.height - heightDVDLogo),
-            xSpeed: 1,
-            ySpeed: 1,
+            xSpeed: this.props.speed,
+            ySpeed: this.props.speed,
             r: DVDLogo.getRandomNumber(100, 256),
             g: DVDLogo.getRandomNumber(100, 256),
             b: DVDLogo.getRandomNumber(100, 256)
