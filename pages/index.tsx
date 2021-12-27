@@ -25,14 +25,17 @@ export default function Home() {
   const [svgWidth,svgHeight,resizing] = useWindowSize()
 
   let { speed, embed } = router.query;
+
+  
   useEffect(() => {
+    if( !router.isReady )return
     if (speed == undefined){
 
       router.push({query:{speed:2}})
     }
   })
 
-  if(!speed) {
+  if(!router.isReady) {
     return <Head>
       <title>DVD</title>
       <meta name="title" content="The Bouncing DVD Logo, but in React." />
@@ -52,22 +55,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
   } 
-  
-  else{
 
+  if (speed != undefined){
     return (
       <div className="bg-black">
         <Head>
           <title>DVD Logo</title>
           <meta name="title" content="The Bouncing DVD Logo, but in React." />
           <meta name="description" content="The iconic bouncing DVD logo, now implemented in React." />
-           
+            
           <meta property="og:type" content="website"/>
           <meta property="og:url" content="https://dvd.jcde.xyz/"/>
           <meta property="og:title" content="The Bouncing DVD Logo, but in React."/>
           <meta property="og:description" content="The iconic bouncing DVD logo, now implemented in React."/>
           <meta property="og:image" content="https://dvd.jcde.xyz/dvdlogo-export.png"/>
-
+  
           <meta property="twitter:card" content="summary_large_image"/>
           <meta property="twitter:url" content="https://dvd.jcde.xyz/"/>
           <meta property="twitter:title" content="The Bouncing DVD Logo, but in React."/>
@@ -75,9 +77,9 @@ export default function Home() {
           <meta property="twitter:image" content="https://dvd.jcde.xyz/dvdlogo-export.png"/>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-     
+      
         <svg width={svgWidth} height={svgHeight} style={{ backgroundColor: 'black'}}  >
-          <DVDLogo width={svgWidth} height={svgHeight} speed={parseInt(speed as string)} resizing={resizing} />
+          <DVDLogo width={svgWidth} height={svgHeight} speed={parseFloat(speed as string)} resizing={resizing} />
         </svg>
         {!embed &&
         <div className="absolute bottom-10 right-12 flex flex-col text-xs gap-1 text-right">
@@ -90,13 +92,16 @@ export default function Home() {
             Andriy Chemerynskiy
           </a>
           </span>
-
+  
         
         </div>
         }
       </div>
     )
-  }
+   
+  } else {return <></>}
+  
+  
 }
 
 export {useWindowSize}
