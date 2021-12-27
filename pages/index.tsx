@@ -81,7 +81,7 @@ export default function Home() {
         <svg width={svgWidth} height={svgHeight} style={{ backgroundColor: 'black'}}  >
           <DVDLogo width={svgWidth} height={svgHeight} speed={parseFloat(speed as string)} resizing={resizing} />
         </svg>
-        {!embed &&
+        {(embed as string) != 'true' &&
         <div className="absolute bottom-10 right-12 flex flex-col text-xs gap-1 text-right">
           <span className="text-gray-300">
           <a href="https://github.com/jcdea/dvdlogo" className=" text-gray-300 border-b border-transparent hover:border-gray-300">
