@@ -4,10 +4,14 @@ import{ useRouter }from 'next/router'
 import { useEffect, useState } from 'react'
 
 function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
+  const [size, setSize] = useState<[number,number,boolean]>([0, 0, false]);
   useEffect(() => {
+
+    let doit: ReturnType<typeof setTimeout>;
     function updateSize() {
-      setSize([window.innerWidth, window.innerHeight]);
+    setSize([window.innerWidth, window.innerHeight, true])
+      clearTimeout(doit);
+      doit = setTimeout(() => setSize([window.innerWidth, window.innerHeight,false]), 100)
     }
     window.addEventListener('resize', updateSize);
     updateSize();
@@ -18,9 +22,9 @@ function useWindowSize() {
 
 export default function Home() {
   const router = useRouter()
-  const [svgWidth,svgHeight] = useWindowSize()
+  const [svgWidth,svgHeight,resizing] = useWindowSize()
 
-  let { speed } = router.query;
+  let { speed, embed } = router.query;
   useEffect(() => {
     if (speed == undefined){
 
@@ -30,8 +34,21 @@ export default function Home() {
 
   if(!speed) {
     return <Head>
-        <title>dvd logo thing</title>
-        <meta name="description" content="dvd logo" />
+      <title>DVD</title>
+      <meta name="title" content="The Bouncing DVD Logo, but in React." />
+      <meta name="description" content="The iconic bouncing DVD logo, now implemented in React." />
+       
+      <meta property="og:type" content="website"/>
+      <meta property="og:url" content="https://dvd.jcde.xyz/"/>
+      <meta property="og:title" content="The Bouncing DVD Logo, but in React."/>
+      <meta property="og:description" content="The iconic bouncing DVD logo, now implemented in React."/>
+      <meta property="og:image" content="https://dvd.jcde.xyz/dvdlogo-export.png"/>
+
+      <meta property="twitter:card" content="summary_large_image"/>
+      <meta property="twitter:url" content="https://dvd.jcde.xyz/"/>
+      <meta property="twitter:title" content="The Bouncing DVD Logo, but in React."/>
+      <meta property="twitter:description" content="The iconic bouncing DVD logo, now implemented in React."/>
+      <meta property="twitter:image" content="https://dvd.jcde.xyz/dvdlogo-export.png"/>
         <link rel="icon" href="/favicon.ico" />
       </Head>
   } 
@@ -39,16 +56,44 @@ export default function Home() {
   else{
 
     return (
-      <div>
+      <div className="bg-black">
         <Head>
-          <title>dvd logo</title>
-          <meta name="description" content="dvd logo" />
+          <title>DVD Logo</title>
+          <meta name="title" content="The Bouncing DVD Logo, but in React." />
+          <meta name="description" content="The iconic bouncing DVD logo, now implemented in React." />
+           
+          <meta property="og:type" content="website"/>
+          <meta property="og:url" content="https://dvd.jcde.xyz/"/>
+          <meta property="og:title" content="The Bouncing DVD Logo, but in React."/>
+          <meta property="og:description" content="The iconic bouncing DVD logo, now implemented in React."/>
+          <meta property="og:image" content="https://dvd.jcde.xyz/dvdlogo-export.png"/>
+
+          <meta property="twitter:card" content="summary_large_image"/>
+          <meta property="twitter:url" content="https://dvd.jcde.xyz/"/>
+          <meta property="twitter:title" content="The Bouncing DVD Logo, but in React."/>
+          <meta property="twitter:description" content="The iconic bouncing DVD logo, now implemented in React."/>
+          <meta property="twitter:image" content="https://dvd.jcde.xyz/dvdlogo-export.png"/>
           <link rel="icon" href="/favicon.ico" />
         </Head>
      
         <svg width={svgWidth} height={svgHeight} style={{ backgroundColor: 'black'}}  >
-          <DVDLogo width={svgWidth} height={svgHeight} speed={parseInt(speed as string)} />
+          <DVDLogo width={svgWidth} height={svgHeight} speed={parseInt(speed as string)} resizing={resizing} />
         </svg>
+        {!embed &&
+        <div className="absolute bottom-10 right-12 flex flex-col text-xs gap-1 text-right">
+          <span className="text-gray-300">
+          <a href="https://github.com/jcdea/dvdlogo" className=" text-gray-300 border-b border-transparent hover:border-gray-300">
+            view source 
+          </a>{` `}on github</span>
+          <span className="text-gray-300 ">inspired by{` `}
+          <a href="https://github.com/andrewchmr/BouncingDVDLogoReactSVG" className=" text-gray-300 border-b border-transparent hover:border-gray-300">
+            Andriy Chemerynskiy
+          </a>
+          </span>
+
+        
+        </div>
+        }
       </div>
     )
   }

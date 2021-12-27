@@ -15,6 +15,7 @@ interface DVDLogoProps {
     width: number;
     height: number;
     speed: number;
+    resizing: boolean;
 }
 
 const widthDVDLogo = 200;
@@ -53,6 +54,12 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
 
     componentDidMount() {
         const moveDVDLogo =() => {
+        if (this.props.resizing){
+          this.setState({
+            x: 100,
+            y:100
+          })
+        }
         this.setState({
             x: this.state.x + this.state.xSpeed,
             y: this.state.y + this.state.ySpeed
