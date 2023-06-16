@@ -88,7 +88,7 @@ export default function Home() {
             const song = document.getElementById(
               "schoolsong"
             ) as HTMLAudioElement;
-            song.playbackRate = parseFloat(speed as string);
+            song.playbackRate = parseFloat(speed as string)/2;
             song.paused ? song.play() : song.pause();
           }}
         ></button>
@@ -170,6 +170,7 @@ export default function Home() {
               id="schoolsong"
               src="https://dankook.sen.hs.kr/crosseditor/binary/files/schoolsong/SEI_00001178/schoolSong.mp3"
               autoPlay
+              loop
             ></audio>
           </div>
         )}
