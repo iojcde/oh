@@ -38,12 +38,11 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
   }
 
   setRandomColors() {
-    this.props.color &&
-      this.setState({
-        r: DVDLogo.getRandomNumber(100, 256),
-        g: DVDLogo.getRandomNumber(100, 256),
-        b: DVDLogo.getRandomNumber(100, 256),
-      });
+    this.setState({
+      r: DVDLogo.getRandomNumber(100, 256),
+      g: DVDLogo.getRandomNumber(100, 256),
+      b: DVDLogo.getRandomNumber(100, 256),
+    });
   }
 
   static getRandomNumber(min: number, max: number): number {
@@ -91,7 +90,7 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
       <image
         width={250}
         height={165}
-        style={{ filter: `hue-rotate(${r}deg)` }}
+        style={{ filter: this.props.color && `hue-rotate(${r}deg)` }}
         href="https://s3.ap-northeast-2.amazonaws.com/event-localnaeil/FileData/Article/202104/fcb5b7b3-a72e-4cdd-8d07-0f9675912284.jpg"
         transform={`translate(${x}, ${y})`}
       ></image>
