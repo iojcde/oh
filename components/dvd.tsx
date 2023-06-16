@@ -19,6 +19,15 @@ interface DVDLogoProps {
   color: boolean;
 }
 
+const images = [
+  {
+    url: "https://s3.ap-northeast-2.amazonaws.com/event-localnaeil/FileData/Article/202104/fcb5b7b3-a72e-4cdd-8d07-0f9675912284.jpg",
+    width: 250,
+    height: 165,
+  },
+  {},
+];
+
 const widthDVDLogo = 250;
 const heightDVDLogo = 165;
 
@@ -88,6 +97,7 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
 
     return (
       <image
+        className=" z-50 relative"
         width={250}
         height={165}
         style={{ filter: this.props.color && `hue-rotate(${r}deg)` }}
