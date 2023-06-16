@@ -16,6 +16,7 @@ interface DVDLogoProps {
   height: number;
   speed: number;
   resizing: boolean;
+  color: boolean;
 }
 
 const widthDVDLogo = 250;
@@ -37,11 +38,12 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
   }
 
   setRandomColors() {
-    this.setState({
-      r: DVDLogo.getRandomNumber(100, 256),
-      g: DVDLogo.getRandomNumber(100, 256),
-      b: DVDLogo.getRandomNumber(100, 256),
-    });
+    this.props.color &&
+      this.setState({
+        r: DVDLogo.getRandomNumber(100, 256),
+        g: DVDLogo.getRandomNumber(100, 256),
+        b: DVDLogo.getRandomNumber(100, 256),
+      });
   }
 
   static getRandomNumber(min: number, max: number): number {

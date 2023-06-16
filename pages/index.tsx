@@ -26,7 +26,7 @@ export default function Home() {
   const router = useRouter();
   const [svgWidth, svgHeight, resizing] = useWindowSize();
 
-  let { speed, embed } = router.query;
+  let { speed, embed, color } = router.query;
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -131,6 +131,7 @@ export default function Home() {
           <DVDLogo
             width={svgWidth}
             height={svgHeight}
+            color={color == "true"}
             speed={parseFloat(speed as string)}
             resizing={resizing}
           />
