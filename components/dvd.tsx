@@ -9,6 +9,9 @@ interface DVDLogoState {
   r: number;
   g: number;
   b: number;
+  image: string;
+  widthDVDLogo: number;
+  heightDVDLogo: number;
 }
 
 interface DVDLogoProps {
@@ -25,19 +28,33 @@ const images = [
     width: 250,
     height: 165,
   },
-  {},
+  {
+    url: "https://edudonga.com/data/article/1604/1935588662_u6pyd59o.jpg",
+    width: 350,
+    height: 196.5,
+  },
+  {
+    url: "http://news.naeil.com/AttachFile/PREV/2016/02/18/00072392_P.jpg",
+    width: 141.5,
+    height: 220,
+  },
+  {
+    url: "https://cdn.veritas-a.com/news/photo/201504/39843_24588_4259.JPG",
+    width: 272.5,
+    height: 181,
+  },
 ];
-
-const widthDVDLogo = 250;
-const heightDVDLogo = 165;
 
 class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
   constructor(props: DVDLogoProps) {
     super(props);
-
+    const image = images[Math.floor(Math.random() * images.length)];
     this.state = {
-      x: DVDLogo.getRandomNumber(0, this.props.width - widthDVDLogo),
-      y: DVDLogo.getRandomNumber(0, this.props.height - heightDVDLogo),
+      image: image.url,
+      widthDVDLogo: image.width,
+      heightDVDLogo: image.height,
+      x: DVDLogo.getRandomNumber(0, this.props.width - image.width),
+      y: DVDLogo.getRandomNumber(0, this.props.height - image.height),
       xSpeed: this.props.speed,
       ySpeed: this.props.speed,
       r: DVDLogo.getRandomNumber(100, 256),
@@ -47,10 +64,14 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
   }
 
   setRandomColors() {
+    const image = images[Math.floor(Math.random() * images.length)];
     this.setState({
       r: DVDLogo.getRandomNumber(100, 256),
       g: DVDLogo.getRandomNumber(100, 256),
       b: DVDLogo.getRandomNumber(100, 256),
+      image: image.url,
+      widthDVDLogo: image.width,
+      heightDVDLogo: image.height,
     });
   }
 
@@ -62,8 +83,8 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
     const moveDVDLogo = () => {
       if (this.props.resizing) {
         this.setState({
-          x: 100,
-          y: 100,
+          x: 0,
+          y: 0,
         });
       }
       this.setState({
@@ -72,7 +93,7 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
       });
 
       if (
-        this.state.x + widthDVDLogo >= this.props.width ||
+        this.state.x + this.state.widthDVDLogo >= this.props.width ||
         this.state.x <= 0
       ) {
         this.setState({ xSpeed: -this.state.xSpeed });
@@ -80,7 +101,7 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
       }
 
       if (
-        this.state.y + heightDVDLogo >= this.props.height ||
+        this.state.y + this.state.heightDVDLogo >= this.props.height ||
         this.state.y <= 0
       ) {
         this.setState({ ySpeed: -this.state.ySpeed });
@@ -96,14 +117,23 @@ class DVDLogo extends Component<DVDLogoProps, DVDLogoState> {
     const { r, g, b, x, y } = this.state;
 
     return (
-      <image
-        className=" z-50 relative"
-        width={250}
-        height={165}
-        style={{ filter: this.props.color && `hue-rotate(${r}deg)` }}
-        href="https://s3.ap-northeast-2.amazonaws.com/event-localnaeil/FileData/Article/202104/fcb5b7b3-a72e-4cdd-8d07-0f9675912284.jpg"
-        transform={`translate(${x}, ${y})`}
-      ></image>
+      <>
+        <image
+          className=" z-50 relative cursor-pointer"
+          width={this.state.widthDVDLogo}
+          height={this.state.heightDVDLogo}
+          style={{ filter: this.props.color && `hue-rotate(${r}deg)` }}
+          href={this.state.image}
+          transform={`translate(${x}, ${y})`}
+          onClick={() => {
+            const song = document.getElementById(
+              "schoolsong"
+            ) as HTMLAudioElement;
+            song.playbackRate = this.props.speed / 2;
+            song.paused ? song.play() : song.pause();
+          }}
+        ></image>
+      </>
     );
   }
 }

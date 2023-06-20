@@ -82,16 +82,13 @@ export default function Home() {
   if (speed != undefined) {
     return (
       <div className="bg-black h-screen w-screen">
-        <button
-          className="bg-transparent inset-0 absolute z-0"
-          onClick={() => {
-            const song = document.getElementById(
-              "schoolsong"
-            ) as HTMLAudioElement;
-            song.playbackRate = parseFloat(speed as string)/2;
-            song.paused ? song.play() : song.pause();
-          }}
-        ></button>
+        <audio
+          id="schoolsong"
+          src="https://dankook.sen.hs.kr/crosseditor/binary/files/schoolsong/SEI_00001178/schoolSong.mp3"
+          autoPlay
+          loop
+        ></audio>
+
         <Head>
           <title>DVD Logo</title>
           <meta name="title" content="The Bouncing DVD Logo, but in React." />
@@ -166,12 +163,6 @@ export default function Home() {
                 Andriy Chemerynskiy
               </a>
             </span>
-            <audio
-              id="schoolsong"
-              src="https://dankook.sen.hs.kr/crosseditor/binary/files/schoolsong/SEI_00001178/schoolSong.mp3"
-              autoPlay
-              loop
-            ></audio>
           </div>
         )}
       </div>
